@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webpage</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@500;600&family=Roboto:ital,wght@0,400;0,500;0,700;1,300;1,400&display=swap");
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    padding-top: min(20vh, 3em);
+    font-family: "Roboto", sans-serif;
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    overflow-x: hidden;
+    transition: filter 0.3s ease; /* لتأثير الـ blur */
+  }
+
+
+
+  .container {
+    grid-template-columns: repeat(12, 1fr);
+    display: grid;
+    row-gap: 3rem;
+  }
+  @media (min-width: 55em) {
+    .container {
+      column-gap: 3rem;
+    }
+  }
+
+  .arabic-honorific {
+    font-family: 'Amiri', 'Noto Naskh Arabic', sans-serif;
+    font-size: 1.8rem;
+    direction: rtl;
+    letter-spacing: 0;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .logo a {
+      color: #7EC8E3;
+      font-size: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .arabic-honorific {
+      font-size: 1.2rem;
+    }
+  }
+
+  img {
+    display: block;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: #54627B;
+    font-size: 1.1rem;
+  }
+
+  footer ul li a, footer .copyright a, .feature-content a, .blog .card h3 a, main aside .box-content h3 a, main .slideshow-container .text a {
+    text-transform: capitalize;
+    display: inline-block;
+    font-weight: 600;
+  }
+  footer ul li a:hover, footer .copyright a:hover, .feature-content a:hover, .blog .card h3 a:hover, main aside .box-content h3 a:hover, main .slideshow-container .text a:hover {
+    text-decoration: underline;
+  }
+
+  /* Header */
+  header {
+    justify-items: center;
+    margin-bottom: 1em;
+    grid-column: 1/span 14;
+    position: relative;
+  }
+  header .logo,
+  header nav {
+    text-align: center;
+  }
+  header .logo {
+    margin-bottom: 2em;
+  }
+  header .logo a {
+    color: #ECD5BB;
+    font-size: 5rem;
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+  }
+
+  /* زر الهمبرغر في المنتصف */
+  .hamburger {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 10;
+    display: block; /* دائمًا مرئي في المنتصف */
+  }
+
+  .hamburger span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background: #ECD5BB;
+    margin: 6px 0;
+    transition: 0.3s;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+
+  /* قائمة التنقل مع تأثير blur */
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+    z-index: 5;
+  }
+
+  .nav-menu.active {
+    opacity: 1;
+    visibility: visible;
+    filter:none;
+  }
+
+  .nav-menu ul {
+    list-style: none;
+    text-align: center;
+  }
+
+  .nav-menu ul li {
+    margin: 20px 0;
+  }
+
+  .nav-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    font-weight: 600;
+  }
+
+  .nav-menu ul li a:hover {
+    color: #ECD5BB;
+  }
+
+  /* Main Styles */
+  .feature-img .img-container, .blog .card .img-container, main aside .box .img-container {
+    overflow: hidden;
+  }
+  .feature-img .img-container:hover img, .blog .card .img-container:hover img, main aside .box .img-container:hover img {
+    transform: rotate(2deg) scale(1.1);
+  }
+
+  main {
+    padding-top: 1rem;
+    padding-bottom: 3.25rem;
+    border-bottom: 1px solid #ededed;
+    grid-column: span 14;
+  }
+  @media (min-width: 55em) {
+    main {
+      padding-top: 3.25rem;
+      border-top: 1px solid #ededed;
+    }
+  }
+  main .slideshow-container {
+    grid-column: span 12;
+    position: relative;
+  }
+  main .slideshow-container img {
+    object-fit: cover;
+    width: 100%;
+    vertical-align: middle;
+    height: inherit;
+  }
+  @media (min-width: 55em) {
+    main .slideshow-container {
+      grid-column: 2/span 7;
+    }
+  }
+  main .slideshow-container .text {
+    padding: 0.938rem 1.875rem;
+    position: absolute;
+    bottom: 0;
+    left: 0%;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    text-transform: capitalize;
+    line-height: 1.6;
+    box-shadow: 0.313rem 0.313rem 1rem rgba(0, 0, 0, 0.1490196078);
+    width: 100%;
+  }
+  @media (min-width: 55em) {
+    main .slideshow-container .text {
+      padding: 1.875rem 2.188rem;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: max-content;
+      background: #fff;
+      bottom: unset;
+    }
+  }
+  main .slideshow-container .text a {
+    font-size: 1rem;
+    color: #fff;
+    font-family: "Playfair Display", serif;
+  }
+  @media (min-width: 55em) {
+    main .slideshow-container .text a {
+      font-size: 1.8rem;
+      color: #111;
+    }
+  }
+  main .slideshow-container .text i {
+    font-size: 0.9rem;
+    display: block;
+    color: #c6c6c6;
+  }
+  @media (min-width: 55em) {
+    main .slideshow-container .text i {
+      color: #6e6e6e;
+    }
+  }
+  main .slideshow-container .fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+    height: 100%;
+  }
+  @keyframes fade {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+  }
+  main .slideshow-container .prev,
+  main .slideshow-container .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 1em;
+    margin-top: -1.375em;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.125rem;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+  }
+  @media (min-width: 55em) {
+    main .slideshow-container .prev,
+    main .slideshow-container .next {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+  }
+  main .slideshow-container .prev:hover,
+  main .slideshow-container .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  main .slideshow-container .next {
+    right: 0;
+    border-radius: 0.188rem 0 0 0.188rem;
+  }
+  @media only screen and (max-width: 18.75rem) {
+    main .slideshow-container .prev,
+    main .slideshow-container .next,
+    main .slideshow-container .text {
+      font-size: 0.688rem;
+    }
+  }
+  main aside {
+    grid-column: span 12;
+    display: grid;
+    gap: 1.5rem;
+    padding-inline: 1.5em;
+    grid-template-columns: repeat(12, 1fr);
+  }
+  @media (min-width: 55em) {
+    main aside {
+      grid-column: span 3;
+      padding-inline: 0;
+      grid-template-columns: 1fr;
+    }
+  }
+  main aside .box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    grid-column: span 12;
+  }
+  @media (min-width: 45em) {
+    main aside .box {
+      grid-column: span 6;
+    }
+  }
+  @media (min-width: 55em) {
+    main aside .box {
+      grid-column: span 1;
+    }
+  }
+  main aside .box img {
+    width: clamp(100%, 10vw, 9.375rem);
+    height: 100%;
+    object-fit: cover;
+    transition: 0.2s ease-in-out;
+  }
+  @media (min-width: 55em) {
+    main aside .box img {
+      width: clamp(3.125rem, 10vw, 20rem);
+    }
+  }
+  main aside .box .img-container {
+    aspect-ratio: 1/1;
+  }
+  main aside .box-content {
+    grid-column: span 3;
+  }
+  main aside .box-content i,
+  main aside .box-content h3 {
+    text-transform: capitalize;
+  }
+  main aside .box-content h3 a {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+  }
+  main aside .box-content i {
+    color: #6e6e6e;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.7em;
+  }
+
+  section {
+    padding-block: 3.25rem;
+    border-bottom: 1px solid #ededed;
+    grid-column: span 14;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  .feature-content i, .blog .card i {
+    color: #6e6e6e;
+    font-size: 0.9rem;
+  }
+
+  .feature-content i span, .blog .card i span {
+    display: block;
+    width: 0.2rem;
+    height: 0.2rem;
+    background: #6e6e6e;
+    border-radius: 50%;
+    margin-inline: 0.313em;
+  }
+
+  .blog .container {
+    grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
+    grid-column: 2/span 10;
+    gap: 2rem;
+  }
+  .blog .card {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1.125rem;
+  }
+  @media (min-width: 75em) {
+    .blog .card {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.125rem;
+    }
+  }
+  .blog .card div {
+    grid-column: span 2;
+  }
+  .blog .card .img-container img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    grid-column: span 2;
+    transition: 0.2s ease-in-out;
+    object-fit: cover;
+  }
+  @media (min-width: 55em) {
+    .blog .card .img-container img {
+      aspect-ratio: 3/2;
+      grid-column: unset;
+    }
+  }
+  .blog .card i {
+    display: inline-flex;
+    align-items: center;
+  }
+  .blog .card i:nth-of-type(1) {
+    text-transform: capitalize;
+  }
+  .blog .card h3 {
+    text-transform: capitalize;
+    margin-block: 0.5rem;
+  }
+  .blog h2 {
+    grid-column: 2/span 10;
+    margin-bottom: 1.2em;
+  }
+
+  .feature {
+    row-gap: 3rem;
+  }
+  .feature > div {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    row-gap: 2rem;
+  }
+  @media (min-width: 75em) {
+    .feature > div {
+      column-gap: 2rem;
+    }
+  }
+  .feature h2 {
+    grid-column: 2/span 8;
+    text-transform: capitalize;
+    margin-bottom: -1.25em;
+  }
+  @media (min-width: 75em) {
+    .feature h2 {
+      grid-column: 3/span 8;
+    }
+  }
+  .feature-img {
+    grid-column: span 12;
+  }
+  @media (min-width: 45em) {
+    .feature-img {
+      grid-column: 2/span 8;
+    }
+  }
+  @media (min-width: 75em) {
+    .feature-img {
+      grid-column: 3/8;
+    }
+  }
+  .feature-img img {
+    width: 100%;
+    transition: 0.2s ease-in-out;
+  }
+  .feature-content {
+    grid-column: 2/-2;
+  }
+  @media (min-width: 75em) {
+    .feature-content {
+      grid-column: 8/-3;
+    }
+  }
+  .feature-content i {
+    display: inline-flex;
+    text-transform: capitalize;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .feature-content a {
+    margin-top: 0.625em;
+    margin-bottom: 1.875em;
+    font-size: 1.3rem;
+    display: block;
+  }
+  .feature-content p {
+    line-height: 1.6;
+    margin-bottom: 0.5em;
+  }
+  .feature-content .btn-more {
+    display: block;
+    font-size: 1rem;
+    margin-top: 1.5em;
+    margin-bottom: 0;
+  }
+
+  .quote {
+    background: #f3f3f3;
+    place-content: center;
+    min-height: 16.25rem;
+    text-align: center;
+  }
+  .quote span {
+    color: #54627B;
+    display: block;
+    grid-column: span 14;
+    font-weight: 500;
+  }
+  .quote hr {
+    grid-column: span 12;
+    display: block;
+    height: 0.125em;
+    background: #54627B;
+    width: 1.875rem;
+    border: none;
+    margin: 0.75rem auto 1.25rem auto;
+    font-weight: 400;
+  }
+  .quote h1 {
+    font-size: 1.6rem;
+    grid-column: 2/span 10;
+    line-height: 1.4;
+    font-family: "Playfair Display", serif;
+  }
+  @media (min-width: 55em) {
+    .quote h1 {
+      grid-column: 5/span 4;
+      font-size: 2rem;
+    }
+  }
+  .quote i {
+    grid-column: span 14;
+    text-transform: capitalize;
+    margin-top: 1.125em;
+  }
+
+  footer {
+    grid-column: span 14;
+    padding: 2rem 0;
+    background-color: #54627B;
+    color: #fff;
+  }
+  footer .container {
+    row-gap: 1rem;
+  }
+  footer .copyright {
+    grid-column: 2/span 10;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  @media (min-width: 45em) {
+    footer .copyright {
+      grid-column: 2/7;
+    }
+  }
+  footer ul {
+    grid-column: 2/span 10;
+  }
+  @media (min-width: 45em) {
+    footer ul {
+      grid-column: span 5;
+    }
+  }
+  footer ul li {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1em;
+  }
+  @media (min-width: 45em) {
+    footer ul li {
+      justify-content: flex-end;
+    }
+  }
+  footer ul li a {
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #fff;
+  }
+  footer a:hover {
+    color: #f39c12;
+  }
+
+  .social-links {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .social-links a {
+    font-size: 24px;
+    transition: color 0.3s ease;
+    color: #fff;
+  }
+
+  .social-links a.facebook:hover {
+    color: #3b5998;
+  }
+
+  .social-links a.twitter:hover {
+    color: #1da1f2;
+  }
+
+  .social-links a.instagram:hover {
+    color: #e4405f;
+  }
+</style>
+<body>
+  <header>
+    <div class="logo"><a href="#">Aishah</a></div>
+    <nav>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="Qurannew/quran.html">Quran</a></li>
+        <li><a href="werd/index4.html">Daily Quran Recitation</a></li>
+        <li><a href="islamic creed/imag.html">Islamic Creed</a></li>
+        <li><a href="shia/index.html">خطر التشيع على الأمة</a></li>
+        <li><a href="splication/index.html">Supplication</a></li>
+        <li><a href="Duaa/index.html">about us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="slideshow-container">
+        <div class="mySlides fade">
+          <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0" alt="Slide 1">
+          <div class="text">
+            <a href="#"> <br></a>
+            <i></i>
+          </div>
+        </div>
+        <div class="mySlides fade">
+          <img src="https://images.unsplash.com/photo-1472214103451-9374e2d44a20" alt="Slide 2">
+          <div class="text"><a href="#"></a></div>
+        </div>
+        <div class="mySlides fade">
+          <img src="https://images.unsplash.com/photo-1454789548928-9efd52cb859d" alt="Slide 3">
+          <div class="text"><a href="#"></a></div>
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+      </div>
+      <aside>
+        <div class="box">
+          <a href="books/book.html">
+            <div class="img-container">
+              <img src="img/pexels-thought-catalog-317580-904616.jpg" alt="">
+            </div>
+          </a>
+          <div class="box-content">
+            <i>books</i>
+            <h3><a href="books/book.html">Discover essential reads to inspire and guide your journey</a></h3>
+          </div>
+        </div>
+        <div class="box">
+          <a href="#">
+            <div class="img-container">
+              <img src="img/daily.jpg" alt="">
+            </div>
+          </a>
+          <div class="box-content">
+            <i>daily life</i>
+            <h3><a href="#">Live each day guided by faith and devotion</a></h3>
+          </div>
+        </div>
+        <div class="box">
+          <a href="#">
+            <div class="img-container">
+              <img src="img/pexel.jpg" alt="">
+            </div>
+          </a>
+          <div class="box-content">
+            <i>The Biography of Prophet Muhammad</i>
+            <h3><a href="#">Prophet Muhammad ﷺ, his life, teachings, and impact on Islamic history</a></h3>
+          </div>
+        </div>
+        <div class="box">
+          <a href="#">
+            <div class="img-container">
+              <img src="img/themind.jpg" alt="">
+            </div>
+          </a>
+          <div class="box-content">
+            <i>Self-development</i>
+            <h3><a href="#">Focuses on improving oneself through knowledge, discipline, and character to achieve spiritual and worldly success</a></h3>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <section class="blog">
+    <h2>Latest from the Blog</h2>
+    <div class="container">
+      <div class="card">
+        <a href="women/w.html">
+          <div class="img-container">
+            <img src="img/wom.jpg" alt="">
+          </div>
+        </a>
+        <div>
+          <i>Women in Islam</i>
+          <h3><a href="women/w.html">The esteemed role of women in Islam, focusing on their rights, responsibilities, and contributions to society.</a></h3>
+          <i>February 4, 2022 <span></span> by .....</i>
+        </div>
+      </div>
+      <div class="card">
+        <a href="#">
+          <div class="img-container">
+            <img src="img/ramadan.jpg" alt="">
+          </div>
+        </a>
+        <div>
+          <i>Ramadan</i>
+          <h3><a href="#">Your Guide to Ramadan</a></h3>
+          <i>June 19, 2022 <span></span> by Luna</i>
+        </div>
+      </div>
+      <div class="card">
+        <a href="#">
+          <div class="img-container">
+            <img src="https://images.unsplash.com/photo-1504382103100-db7e92322d39?ixlib=rb-4.0.3&auto=format&fit=crop&w=387&q=80" alt="">
+          </div>
+        </a>
+        <div>
+          <i>inspiration, personal</i>
+          <h3><a href="#">..................</a></h3>
+          <i>July 16, 2022 <span></span> by ......</i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature">
+    <h2>featured posts</h2>
+    <div>
+      <a href="#" class="feature-img">
+        <div class="img-container">
+          <img src="https://images.unsplash.com/photo-1544716278-e513176f20b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80" alt="">
+        </div>
+      </a>
+      <div class="feature-content">
+        <i>books</i>
+        <a href="#">why i love reading</a>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi iusto veniam consequuntur tempora vero recusandae ipsam ipsum maiores perspiciatis adipisci inventore aut officiis tempore, optio atque. Modi ipsam fuga iusto? Ut, vitae quia dolorum tenetur accusantium asperiores dolorem, quasi ipsam natus cupiditate voluptatibus ullam, in exercitationem reprehenderit eligendi quod velit.</p>
+        <i>September 4, 2022 <span></span> by ..... <span></span> comments 3</i>
+        <a href="#" class="btn-more">read more</a>
+      </div>
+    </div>
+    <div>
+      <a href="#" class="feature-img">
+        <div class="img-container">
+          <img src="https://images.unsplash.com/photo-1518911914-f064dbbdaaac?ixlib=rb-4.0.3&auto=format&fit=crop&w=1171&q=80" alt="">
+        </div>
+      </a>
+      <div class="feature-content">
+        <i>vegan, work</i>
+        <a href="#">a creative work lunch</a>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi iusto veniam consequuntur tempora vero recusandae ipsam ipsum maiores perspiciatis adipisci inventore aut officiis tempore, optio atque. Modi ipsam fuga iusto? Ut, vitae quia dolorum tenetur accusantium asperiores dolorem, quasi ipsam natus cupiditate voluptatibus ullam, in exercitationem reprehenderit eligendi quod velit.</p>
+        <i>august 9, 2022 <span></span> by .... <span></span> comments 0</i>
+        <a href="#" class="btn-more">read more</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote">
+    <span>Quote of the Day</span>
+    <hr>
+    <h1 style="font-size: 1.5rem; color: #1fb624; line-height: 1.5;">مَنْ أَصْلَحَ سَرِيرَتَهُ أَصْلَحَ اَللَّهُ عَلاَنِيَتَهُ</h1>
+    <i></i>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p class="copyright">
+        Made with ❤️ by <a href="" target="_blank">Baraa Ali</a>
+      </p>
+      <ul class="social-links">
+        <li>
+          <a href="#" class="facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+      showSlides((slideIndex += n));
+    }
+
+    function currentSlide(n) {
+      showSlides((slideIndex = n));
+    }
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      if (n > slides.length) {
+        slideIndex = 1;
+      }
+      if (n < 1) {
+        slideIndex = slides.length;
+      }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slides[slideIndex - 1].style.display = "block";
+    }
+
+    function autoSlide() {
+      plusSlides(1);
+      setTimeout(autoSlide, 3000);
+    }
+    autoSlide();
+
+    // التحكم في زر الهمبرغر وقائمة التنقل
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburger = document.querySelector('.hamburger');
+      const navMenu = document.querySelector('.nav-menu');
+      const body = document.body;
+
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        body.classList.toggle('blur');
+      });
+
+      document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navMenu.classList.remove('active');
+          body.classList.remove('blur');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
